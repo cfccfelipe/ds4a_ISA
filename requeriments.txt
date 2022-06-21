@@ -1,0 +1,5 @@
+dash
+jupyter-dash
+pandas
+dash-labs
+dash-bootstrap-components
