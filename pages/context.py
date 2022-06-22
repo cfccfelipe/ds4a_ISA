@@ -10,7 +10,7 @@ from components.monitor.contextSeries import contextAssets
 register_page(__name__, path='/context')
 
 context = contextAssets("30")
-
+cont, cont1 = context.displayCorrelations()
 # specific layout for this page
 layout = html.Div(
 
@@ -22,7 +22,8 @@ layout = html.Div(
 
         dbc.Row([
 
-            dbc.Col(context.displayCorrelations()),
+            dbc.Col(cont),
+            dbc.Col(cont1),
         ]),
 
 
