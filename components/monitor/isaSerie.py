@@ -148,13 +148,13 @@ class isaTimeSerie:
         return candle
 
     def displayDescomposition(self):
-        candle = html.Div(
+        descomposition = html.Div(
             [
 
                 html.Div([
                     dcc.Graph(figure=self.getDescomposition())
                 ])
 
-            ], id=self.id
+            ],
         )
-        return candle
+        return descomposition

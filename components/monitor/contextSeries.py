@@ -223,7 +223,7 @@ class contextAssets:
     def displayCorrelations(self):
         matrix1, matrix2, mdis = self.getCorrelations()
 
-        cont = html.Div([
+        corr = html.Div([
 
             html.Div([
                 dcc.Graph(figure=matrix1)
@@ -233,7 +233,7 @@ class contextAssets:
                 dcc.Graph(figure=matrix2)
             ])]
         )
-        cont1 = html.Div([
+        corr2 = html.Div([
 
             html.Div([
                 dcc.Graph(figure=mdis)
@@ -241,4 +241,4 @@ class contextAssets:
             ]),
         ]
         )
-        return cont, cont1
+        return corr, corr2
