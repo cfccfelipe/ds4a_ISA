@@ -40,6 +40,13 @@ class isaTimeSerie:
         candle_ISA.add_trace(ci2, secondary_y=False)
 
         candle_ISA.add_trace(ci3, secondary_y=True)
+        b1 = (go.Scatter(x=ISA["date"], y=ISA["bollinger_up"],
+              opacity=0.2, name="BOLUP", marker_color='blue'))
+
+        b2 = (go.Scatter(x=ISA["date"], y=ISA["bollinger_down"],
+                         opacity=0.2, name="BOLDOWN", marker_color='cyan'))
+        candle_ISA.add_trace(b1, secondary_y=False)
+        candle_ISA.add_trace(b2, secondary_y=False)
 
         candle_ISA.update_layout(
             legend=dict(
