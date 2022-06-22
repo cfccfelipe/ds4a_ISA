@@ -19,11 +19,14 @@ cardGoForecast = cardInfo(
 
 cardGoMonitor = cardInfo(
     "Monitor",
-    "Get the context of the Colombian Stock Market, Correlated Variables and Historical Data of ISA’s stock",
-    "/monitor", "#009FE3")
+    "Get access to the time serie data of ISA’s stocks since 2003",
+    "/monitor", "#D9D9D9")
+cardGoContext = cardInfo(
+    "Context",
+    "Get the context of the Colombian Stock Market, and Correlated Variables",
+    "/Context", "#009FE3")
 # specific layout for this page
 layout = html.Div(
-
     children=[
 
         dbc.Row([
@@ -32,12 +35,12 @@ layout = html.Div(
                         ),
                 html.P(
                     'The value of the ISA’s stock is important to ensure the economic solvency of the company. For this reason, knowing the key variables that impact its behavior improves decision-making.',
-                    className='h4 text-center p-xl-3',
+                    className='h4 text-center p-xl-5',
                 ),
 
                 html.P(
                     'This app monitors and forecasts ISA’s stock prices and correlated variables in specific intervals of days, weeks, and months.',
-                    className='h4 text-center p-xl-3',
+                    className='h4 text-center p-xl-5',
                 ),
             ], className="p-xl-2"),
             dbc.Row([
@@ -45,12 +48,15 @@ layout = html.Div(
                     cardGoMonitor.displayCard(),
                 ),
                 dbc.Col(
+                    cardGoContext.displayCard(),
+                ),
+                dbc.Col(
                     cardGoForecast.displayCard(),
                 ),
                 dbc.Col(
                     cardGoGlosary.displayCard(),
-                )
-            ]),
+                ),
+            ], className="g-0"),
         ]),
 
 

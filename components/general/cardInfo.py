@@ -16,7 +16,8 @@ class cardInfo:
                  html.P(self.body, className="card-body"),
                  html.A(self.title, className='btn btn-primary rounded-3',
                         href=self.link),
-                 ], style={"background-color": self.color_background},
+                 ], style={"background-color": self.color_background,
+                           "height": "300px"},
                 className="text-center",
             ))
         return card
