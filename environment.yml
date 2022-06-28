@@ -1,0 +1,10 @@
+name: env_uvicorn
+channels:
+  - defaults
+dependencies:
+  - pandas
+  - python=3.9
+  - uvicorn
+  - fastapi
+  - dash
+prefix: /home/nmarino/anaconda3/envs/env_uvicorn

@@ -1,15 +1,6 @@
 # libraries
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import pandas as pd
-import plotly.graph_objs as obj
-import uvicorn as uvicorn
-from dash.dependencies import Input, Output
-from fastapi import FastAPI
-from starlette.middleware.wsgi import WSGIMiddleware
-
-#from dash import html
+from dash import html
 import dash_labs as dl
 import dash_bootstrap_components as dbc
 
@@ -96,6 +87,4 @@ server = app.server
 
 # Testing server, don't use in production, host
 if __name__ == "__main__":
-    server = FastAPI()
-    server.mount("/", WSGIMiddleware(app.server))
-    uvicorn.run(server)
+    app.run_server(host='0.0.0.0', port=8050, debug=True)
