@@ -34,12 +34,9 @@ navbar = dbc.Navbar(
                 style={"textDecoration": "none"},
             ),
             dbc.NavItem(dbc.NavLink("Home", href='/')),
-            dbc.NavItem(dbc.NavLink(
-                "Monitor", href="/monitor")),
-            dbc.NavItem(dbc.NavLink(
-                "Context", href="/context")),
-            dbc.NavItem(dbc.NavLink(
-                "Forecast", href="/forecast")),
+            dbc.NavItem(dbc.NavLink("Monitor", href="/monitor")),
+            dbc.NavItem(dbc.NavLink("Context", href="/context")),
+            dbc.NavItem(dbc.NavLink("Forecast", href="/forecast")),
             dbc.DropdownMenu(
                 [
                     dbc.DropdownMenuItem(

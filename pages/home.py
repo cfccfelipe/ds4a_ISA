@@ -10,21 +10,21 @@ register_page(__name__, path='/')
 cardGoGlosary = cardInfo(
     "Glosary",
     "Get access to the glosary of the project, by clicking here",
-    "/glosary", "white")
+    "/glosary", "#ff6300")
 
 cardGoForecast = cardInfo(
     "Forecast",
     "Anticipate situations knowing the future action prices for ISA’s stock",
-    "/forecast", "#D8672F")
+    "/forecast", "#0e70c0")
 
 cardGoMonitor = cardInfo(
     "Monitor",
     "Get access to the time serie data of ISA’s stocks since 2003",
-    "/monitor", "#D9D9D9")
+    "/monitor", "#00b3ff")
 cardGoContext = cardInfo(
     "Context",
     "Get the context of the Colombian Stock Market, and Correlated Variables",
-    "/Context", "#009FE3")
+    "/Context", "#0098ea")
 # specific layout for this page
 layout = html.Div(
     children=[
