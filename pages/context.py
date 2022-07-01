@@ -15,11 +15,14 @@ layout = html.Div(
 
     children=[
         dbc.Row([
+            html.Div("Context Colombian Equity Market Last 30 Days",
+                     className="h1"),
             dbc.Col(context.displayContext()),
 
         ]),
 
         dbc.Row([
+            html.Div("Top 10 Correlated Symbols of Last 30 Days", className="h1"),
             dbc.Col(context.displayCorrelations()),
         ]),
 

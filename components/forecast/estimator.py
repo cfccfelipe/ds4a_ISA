@@ -11,72 +11,58 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../../data").resolve()
 
-results = pd.read_csv(DATA_PATH.joinpath("results.csv"))
-train = pd.read_csv(DATA_PATH.joinpath("train.csv")).rename(
-    columns={"closeISA": "values_train", "ds": "date"}).tail(20)
-matrix_MAPE = results[["MAPE_Prophet", "MAPE_Random", "MAPE_XGB"]]
+results = pd.read_csv(DATA_PATH.joinpath("prediction_selected.csv"))
+train = pd.read_csv(DATA_PATH.joinpath("trains.csv")).tail(10)
 
-matrix_RMSPE = results[["RMSPE_Prophet", "RMSPE_Random", "RMSPE_XGB"]]
-# Apply best results
-predictions = []
-erros = []
-x = results[["RMSE_Prophet", "RMSE_Random",
-             "RMSE_XGB"]].T.apply(lambda x: min(x))
-flag = 0
-for minimum in x:
-    prediction = 0
-    error = 0
-    if results["RMSE_Prophet"][flag] == minimum:
-        prediction = results["predict_Prophet"][flag]
-        error = results["RMSE_Prophet"][flag]
-    elif results["RMSE_Random"][flag] == minimum:
-        prediction = results["predict_Random"][flag]
-        error = results["RMSE_Prophet"][flag]
-    elif results["RMSE_XGB"][flag] == minimum:
-        prediction = results["predict_XGB"][flag]
-        error = results["RMSE_Prophet"][flag]
-    predictions.append(prediction)
-    erros.append(error)
-    flag += 1
-results["predict"] = predictions
-results["RMSE"] = erros
-conector1 = np.append(train["date"].values, results["date"][0])
-conector2 = np.append(train["values_train"].values, results["predict"][0])
+mapes = pd.pivot_table(
+    results[["date", "MAPE", "model"]], index="date", columns="model", values="MAPE")
+rmse = pd.pivot_table(results[["date", "RMSE", "model"]],
+                      index="date", columns="model", values="RMSE")
+rmse = round(rmse, 0)
+selected = results[results["model"] == "Selected"]
+conector1 = np.append(train["date"].values, selected["date"].head(1))
+conector2 = np.append(train["closeISA"].values, selected["predict"].head(1))
 
 
 class estimators:
 
     def getEstimators(self):
-
         model_figure = go.Figure()
-        # True values
+
+        # Train values
         model_figure.add_trace(go.Scatter(name="Train", x=conector1, y=conector2, mode='lines',
                                           marker=dict(color="black")))
-        model_figure.add_trace(go.Scatter(name="Test", x=results["date"], y=results["true"], mode='markers',
-                                          marker=dict(color="blue")))
+
         # Prophet
-        model_figure.add_trace(go.Scatter(name="Prophet", x=results["date"], y=results["predict_Prophet"],
-                                          mode='markers', marker=dict(color="#5B8E8C"), opacity=0.1, showlegend=False))
+        model_figure.add_trace(go.Scatter(name="Prophet", x=results[results["model"] == "Prophet"]["date"],
+                                          y=results[results["model"]
+                                                    == "Prophet"]["predict"],
+                                          mode='markers', marker=dict(color="#5B8E8C"), opacity=0.8))
 
         # RF
-        model_figure.add_trace(go.Scatter(name="RF", x=results["date"], y=results["predict_Random"],
-                                          mode='markers', marker=dict(color="red"), opacity=0.1, showlegend=False))
+        model_figure.add_trace(go.Scatter(name="RF", x=results[results["model"] == "Random Forest"]["date"],
+                                          y=results[results["model"] ==
+                                                    "Random Forest"]["predict"],
+                                          mode='markers', marker=dict(color="green"), opacity=0.8))
 
         # XGB Boost
-        model_figure.add_trace(go.Scatter(name="XGB", x=results["date"], y=results["predict_XGB"],
-                                          mode='markers', marker=dict(color="blue"), opacity=0.1, showlegend=False))
+        model_figure.add_trace(go.Scatter(name="XGB", x=results[results["model"] == "XGB Boost"]["date"],
+                                          y=results[results["model"] ==
+                                                    "XGB Boost"]["predict"],
+                                          mode='markers', marker=dict(color="blue"), opacity=0.8))
 
         # Predictions
-        model_figure.add_trace(go.Scatter(name="Predicted", x=results["date"], y=results["predict"],
-                                          mode='lines', marker=dict(color="green"), opacity=1))
-        model_figure.add_trace(go.Scatter(x=results["date"], y=results["predict"]-results["RMSE"],
+
+        model_figure.add_trace(go.Scatter(name="Predicted", x=selected["date"], y=selected["predict"],
+                                          mode='lines', marker=dict(color="red"), opacity=1))
+
+        model_figure.add_trace(go.Scatter(x=results["date"], y=selected["predict"]-selected["RMSE"],
                                           mode='lines', name="Lower_Band", showlegend=False,
                                           line=dict(width=0), marker=dict(color="#C1CDCD"), fill='tonexty', hoverinfo="skip",
                                           opacity=0.1))
-        model_figure.add_trace(go.Scatter(x=results["date"], y=results["predict"]+results["RMSE"],
+        model_figure.add_trace(go.Scatter(x=results["date"], y=selected["predict"]+selected["RMSE"],
                                           mode='lines', name="Upper_Band", line=dict(width=0),
                                           marker=dict(color="#C1CDCD"), showlegend=False, fill='tonexty', hoverinfo="skip"))
-
         model_figure.update_layout(
             font=dict(
                 family="Roboto",
@@ -94,29 +80,30 @@ class estimators:
         )
         model_figure.update_traces(marker=dict(symbol='circle', line_color='rgba(0, 0, 0, 0)'),
                                    hovertemplate="Date: %{x} <br>Close Price: %{y} (COP)")
-        # Plotting better results
 
-        fig_matrix_mape = px.imshow(
-            matrix_MAPE.iloc[0:11].T, text_auto=True, color_continuous_scale="Greens")
+        fig_matrix_mape = px.imshow(mapes.T, text_auto=True,
+                                    color_continuous_scale="Greens")
         fig_matrix_mape.update_layout(font=dict(family="Roboto", size=14, color="#1A2747"),
                                       title=f'MAPE Forecasting Metric of Models Involved ',
                                       margin=dict(l=0, r=0, b=0, t=40),
-                                      showlegend=False, height=300,
+                                      showlegend=False,
                                       title_x=0.5,
-                                      xaxis_title="Days Forward",
+                                      yaxis_tickformat='%d %B',
+
+                                      xaxis_title="Date",
                                       yaxis_title="Model",
                                       paper_bgcolor='white',
                                       plot_bgcolor='white',
                                       hovermode='closest')
 
         fig_matrix_rmspe = px.imshow(
-            matrix_RMSPE.iloc[0:11].T, text_auto=True, color_continuous_scale="Blues")
+            rmse.T, text_auto=True, color_continuous_scale="Blues")
         fig_matrix_rmspe.update_layout(font=dict(family="Roboto", size=14, color="#1A2747"),
-                                       title=f'RMSPE Forecasting Metric of Models Involved ',
+                                       title=f'RMSE Forecasting Metric of Models Involved ',
                                        margin=dict(l=0, r=0, b=0, t=40),
-                                       showlegend=False, height=300,
+                                       showlegend=False,
                                        title_x=0.5,
-                                       xaxis_title="Days Forward",
+                                       xaxis_title="Date",
                                        yaxis_title="Model",
                                        paper_bgcolor='white',
                                        plot_bgcolor='white',

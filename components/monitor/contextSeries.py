@@ -15,7 +15,6 @@ DATA_PATH = PATH.joinpath("../../data").resolve()
 data_prices = pd.read_csv(DATA_PATH.joinpath("data_prices.csv"))
 data_prices["date"] = pd.to_datetime(data_prices["date"], format="%Y-%m-%d")
 # No much information after this date
-data_prices = data_prices[data_prices["date"] < "2022-04-29"]
 
 # Creating tables with the filter day and Colombian Exchange
 last_d = data_prices.sort_values("date")["date"].tail(
@@ -63,7 +62,6 @@ class contextAssets:
                                                                          stocks_d['vol_million'].quantile(0.75), 1),
                                                                      stocks_d['vol_million'].max()]]))])
         context_stocks.update_layout(
-            title=f'Context Colombian Equity Market Last {self.days_filter} Days',
             title_x=0.5,
             margin=dict(l=0, r=0, b=0, t=40),
             height=175,
@@ -84,7 +82,7 @@ class contextAssets:
         # Add traces
         context_figure.add_trace(
             go.Scatter(x=means_stock_value["symbol"], y=means_stock_value['close'], name="Close Price", mode='markers',
-                       marker=dict(color=round(means_stock_value["var"], 2), size=15, colorscale=["blue", "black", "green"],
+                       marker=dict(color=round(means_stock_value["var"], 2), size=abs(means_stock_value['var']*10), colorscale=["blue", "black", "green"],
                                    showscale=True, line_width=1,
                                    symbol='circle', line_color='rgba(0, 0, 0, 0)', colorbar=dict(title="Variation")),
                        hovertemplate="Stock: %{x} <br>% Variaton: %{marker.color}% <br>Close Price: %{y}<extra></extra>"),
@@ -97,7 +95,7 @@ class contextAssets:
             secondary_y=True,
         )
         context_figure.add_trace(
-            go.Scatter(x=isa_d["symbol"], y=[isa_d['close'].values.mean()], mode='markers', opacity=0.4, marker_color='grey', showlegend=False,
+            go.Scatter(x=isa_d["symbol"], y=[isa_d['close'].values.mean()], mode='markers', opacity=0.2, marker_color='red', showlegend=False,
                        marker=dict(size=40)), secondary_y=False)
 
         context_figure.update_layout(
@@ -129,7 +127,7 @@ class contextAssets:
                 size=14,
                 color="#1A2747"
             ),
-            title=f'Top 10 Correlated Symbols of Last {self.days_filter} Days',
+
 
             margin=dict(l=0, r=0, b=0, t=30),
             showlegend=False,

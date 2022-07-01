@@ -12,12 +12,12 @@ ISA = isaTimeSerie("25")
 layout = html.Div(
 
     children=[
-        dbc.Row(html.Div("Monitor Time Serie ISA", className="h1")),
         dbc.Row([
-            dbc.Col(
-                ISA.displayTimeSerie(), className="col-8"),
             dbc.Col([
-                html.Div("Trend-Season-Residuals 365 days", className="h2"),
+                html.Div("Monitor Time Serie ISA", className="h1"),
+                ISA.displayTimeSerie()], className="col-8"),
+            dbc.Col([
+                html.Div("Trend-Season-Residuals 365 days", className="h1"),
                 ISA.displayDescomposition()]),
 
 
