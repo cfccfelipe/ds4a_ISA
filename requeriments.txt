@@ -3,3 +3,4 @@ jupyter-dash
 pandas
 dash-labs
 dash-bootstrap-components
+holidays_co

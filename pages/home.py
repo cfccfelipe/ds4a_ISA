@@ -24,7 +24,7 @@ cardGoMonitor = cardInfo(
 cardGoContext = cardInfo(
     "Context",
     "Get the context of the Colombian Stock Market, and Correlated Variables",
-    "/Context", "#009FE3")
+    "/context", "#009FE3")
 # specific layout for this page
 layout = html.Div(
     children=[
