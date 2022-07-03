@@ -15,11 +15,11 @@ results = pd.read_csv(DATA_PATH.joinpath("prediction_selected.csv"))
 train = pd.read_csv(DATA_PATH.joinpath("trains.csv")).tail(10)
 
 mapes = pd.pivot_table(
-    results[["date", "MAPE", "model"]], index="date", columns="model", values="MAPE")
-rmse = pd.pivot_table(results[["date", "RMSE", "model"]],
-                      index="date", columns="model", values="RMSE")
+    results[["day", "MAPE", "model"]], index="day", columns="model", values="MAPE")
+rmse = pd.pivot_table(results[["day", "RMSE", "model"]],
+                      index="day", columns="model", values="RMSE")
 rmse = round(rmse, 0)
-selected = results[results["model"] == "Selected"]
+selected = results[results["model"] == "Prediction"]
 conector1 = np.append(train["date"].values, selected["date"].head(1))
 conector2 = np.append(train["closeISA"].values, selected["predict"].head(1))
 
@@ -53,14 +53,14 @@ class estimators:
 
         # Predictions
 
-        model_figure.add_trace(go.Scatter(name="Predicted", x=selected["date"], y=selected["predict"],
+        model_figure.add_trace(go.Scatter(name="Predicted", x=selected["date"], y=selected["predict_select"],
                                           mode='lines', marker=dict(color="red"), opacity=1))
 
-        model_figure.add_trace(go.Scatter(x=results["date"], y=selected["predict"]-selected["RMSE"],
+        model_figure.add_trace(go.Scatter(x=selected["date"], y=selected["predict_select"]-selected["RMSE"],
                                           mode='lines', name="Lower_Band", showlegend=False,
                                           line=dict(width=0), marker=dict(color="#C1CDCD"), fill='tonexty', hoverinfo="skip",
                                           opacity=0.1))
-        model_figure.add_trace(go.Scatter(x=results["date"], y=selected["predict"]+selected["RMSE"],
+        model_figure.add_trace(go.Scatter(x=selected["date"], y=selected["predict_select"]+selected["RMSE"],
                                           mode='lines', name="Upper_Band", line=dict(width=0),
                                           marker=dict(color="#C1CDCD"), showlegend=False, fill='tonexty', hoverinfo="skip"))
         model_figure.update_layout(
@@ -86,12 +86,10 @@ class estimators:
         fig_matrix_mape.update_layout(font=dict(family="Roboto", size=14, color="#1A2747"),
                                       title=f'MAPE Forecasting Metric of Models Involved ',
                                       margin=dict(l=0, r=0, b=0, t=40),
-                                      showlegend=False,
+                                      showlegend=False, height=300,
                                       title_x=0.5,
-                                      yaxis_tickformat='%d %B',
-
-                                      xaxis_title="Date",
-                                      yaxis_title="Model",
+                                      xaxis_title="Model",
+                                      yaxis_title="Date",
                                       paper_bgcolor='white',
                                       plot_bgcolor='white',
                                       hovermode='closest')
@@ -101,10 +99,10 @@ class estimators:
         fig_matrix_rmspe.update_layout(font=dict(family="Roboto", size=14, color="#1A2747"),
                                        title=f'RMSE Forecasting Metric of Models Involved ',
                                        margin=dict(l=0, r=0, b=0, t=40),
-                                       showlegend=False,
+                                       showlegend=False, height=300,
                                        title_x=0.5,
-                                       xaxis_title="Date",
-                                       yaxis_title="Model",
+                                       xaxis_title="Model",
+                                       yaxis_title="Date",
                                        paper_bgcolor='white',
                                        plot_bgcolor='white',
                                        hovermode='closest')
