@@ -8,7 +8,7 @@ from dash_labs.plugins import register_page
 # dash-labs plugin call, menu name and route
 register_page(__name__, path='/team')
 
-team_1 = cardteam("Carlos F. Cortés C.", "Data Science Enthusiastic",
+team_1 = cardteam("Carlos F. Cortés C.", "Data Science Entusiast",
                   "30", "../../assets/felipe.jpg", "https://www.linkedin.com/in/cfccfelipe/").displayCard()
 team_2 = cardteam("Jhon J. Vega D.", "Researcher and Consultant",
                   "30", "../../assets/JJVega.jpg", "https://www.linkedin.com/in/jhon-jairo-vega-diaz-29703a92/").displayCard()

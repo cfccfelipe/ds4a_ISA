@@ -16,7 +16,7 @@ layout = html.Div(
             dbc.Col(html.Div("Project Scoping", className='h1')),
         ]),
         dbc.Row(
-            html.Embed(src="http://bibliotecadigital.ilce.edu.mx/Colecciones/ObrasClasicas/_docs/ElPrincipito.pdf",
+            html.Embed(src="../assets/Project_Scoup.pdf",
                        type="application/pdf"), className="embed d-flex align-items-center"),
 
     ])
