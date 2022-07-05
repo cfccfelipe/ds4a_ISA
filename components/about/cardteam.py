@@ -20,10 +20,10 @@ class cardteam:
                             dbc.CardImg(
                                 src=self.image,
                                 style={"height": "200px"},
-                                className="img-fluid rounded-start",
+                                className="img-circle",
                             ),
 
-                            className="col-md-4"), href=self.linkedin),
+                            className="col-md-4"), href=self.linkedin, target="_blank"),
 
                         dbc.Col(
                             dbc.CardBody(

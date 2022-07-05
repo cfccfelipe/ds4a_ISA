@@ -17,7 +17,7 @@ team_3 = cardteam("Luis M. Lopera P.", "Economist and Data Analyst",
 team_4 = cardteam("Nataly Mariño O.", "Data Analyst and Project Manager",
                   "30", "../../assets/Nataly.jpg", "https://www.linkedin.com/in/nataly-mari%C3%B1o-osorio").displayCard()
 team_5 = cardteam("Rominger Buritica A.", "Electrical Engineer",
-                  "30", "../../assets/RBuritica.jpg", "https://www.linkedin.com/in/rominger-buritica-a97268131/").displayCard()
+                  "30", "https://media-exp1.licdn.com/dms/image/C4E03AQHcrPka2m2zSw/profile-displayphoto-shrink_800_800/0/1607119622347?e=1661990400&v=beta&t=d2YXKqsr4nd3D-VAmYWrSK3N5gS_N-svpeVXbzT9fwY", "https://www.linkedin.com/in/rominger-buritica-a97268131/").displayCard()
 team_6 = cardteam("Rubiel Vargas C.", "Computer Sciences Engineer",
                   "30", "../../assets/rubiel.jpg", "https://www.linkedin.com/in/rubiel-vargas-8281991a6/").displayCard()
 

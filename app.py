@@ -14,55 +14,80 @@ app = dash.Dash(__name__, plugins=[
 
 
 # Top menu, items get from all pages registered with plugin.pages
-navbar = dbc.Navbar(
-    dbc.Container(
-        [
-            html.A(
-                # Use row and col to control vertical alignment of logo / brand
-                dbc.Row(
-                    [
-                        dbc.Col(html.Img(
-                            src='https://www.isa.co/wp-content/uploads/2020/11/logo.png',
-                            style={'height': '5rem', 'padding': '0% 10%'})),
-                        dbc.Col(dbc.NavbarBrand(
-                            "Forecast Stock Prices", className="ms-3")),
-                    ],
-                    align="center",
-                    className="g-2",
+navbar = html.Div(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    html.Div(
+                        html.A(
+                            html.Img(
+                                src='https://www.isa.co/wp-content/uploads/2020/11/logo.png',
+                                alt='Grupo ISA',
+                                style={'height': '5rem'},
+                            ),
+                            href="https://www.isa.co/" ,
+                            target="_blank",
+                        ),
+                    ),
+                    className="text-center"
                 ),
-                href="https://www.isa.co/",
-                style={"textDecoration": "none"},
-            ),
-            dbc.NavItem(dbc.NavLink("Home", href='/')),
-            dbc.NavItem(dbc.NavLink("Monitor", href="/monitor")),
-            dbc.NavItem(dbc.NavLink("Context", href="/context")),
-            dbc.NavItem(dbc.NavLink("Forecast", href="/forecast")),
-            dbc.DropdownMenu(
-                [
-                    dbc.DropdownMenuItem(
-                        "Glosary", href="/glosary"),
-                    dbc.DropdownMenuItem(
-                        "Scoping", href="/scoping"),
-                    dbc.DropdownMenuItem(
-                        "Team 223", href="/team"),
-                ],
-                nav=True,
-                label="About",
-            ),
-
-            dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
-            dbc.Collapse(
-                id="navbar-collapse",
-                is_open=False,
-                navbar=True,
-            ),
-        ]
-    ),
-    color="white",
-    dark=False,
+                dbc.Col(
+                    html.Div(
+                        dbc.Row(
+                            [
+                                html.Div("ISA STOCK ANALYSIS AND PREDICTION", className="h1 mb-0"),
+                                html.Div("Final project DS4A/Colombia - Cohort 6", className="h6 text-center mb-0"),
+                                html.Div("Team 223", className="h6 text-center mb-0"),
+                            ]
+                        ),
+                    )
+                ),
+                dbc.Col(
+                    html.Div(
+                        html.Img(
+                            src='assets\Team223.png',
+                            alt='Grupo ISA',
+                            style={'height': '5rem'},
+                        ),
+                    ),
+                    className="text-center"
+                ),
+            ],
+            justify="center",
+            align="center"
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    dbc.Navbar(
+                        [
+                            dbc.NavLink("Home", href='/'),
+                            dbc.NavLink("Monitor", href="/monitor"),
+                            dbc.NavLink("Context", href="/context"),
+                            dbc.NavLink("Forecast", href="/forecast"),
+                            dbc.DropdownMenu(
+                                [
+                                    dbc.DropdownMenuItem("Glosary", href="/glosary"),
+                                    dbc.DropdownMenuItem("Scoping", href="/scoping"),
+                                    dbc.DropdownMenuItem("Team 223", href="/team"),
+                                ],
+                                nav=True,
+                                label="About",
+                            ),
+                            dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                        ],
+                        className="justify-content-center",
+                        color="white",
+                        dark=False,
+                    ),
+                ),
+            ]
+        ),
+    ]
 )
-# add callback for toggling the collapse on small screens
 
+# add callback for toggling the collapse on small screens
 
 # Main layout
 app.layout = dbc.Container(
