@@ -88,8 +88,8 @@ class estimators:
                                       margin=dict(l=0, r=0, b=0, t=40),
                                       showlegend=False, height=300,
                                       title_x=0.5,
-                                      xaxis_title="Model",
-                                      yaxis_title="Date",
+                                      xaxis_title="Day",
+                                      yaxis_title="Model",
                                       paper_bgcolor='white',
                                       plot_bgcolor='white',
                                       hovermode='closest')
@@ -101,8 +101,8 @@ class estimators:
                                        margin=dict(l=0, r=0, b=0, t=40),
                                        showlegend=False, height=300,
                                        title_x=0.5,
-                                       xaxis_title="Model",
-                                       yaxis_title="Date",
+                                       xaxis_title="Day",
+                                       yaxis_title="Model",
                                        paper_bgcolor='white',
                                        plot_bgcolor='white',
                                        hovermode='closest')
